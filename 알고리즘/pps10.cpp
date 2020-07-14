@@ -23,6 +23,14 @@ int digit_sum(int num){
         int temp = num % 10;
         return temp + digit_sum(num/10);
     }
+
+    // int tmp, sum=0;
+    // while(x>0) {
+    //  tmp=x%10;
+    //  sum+=tmp;
+    //  x=x/10;
+    // }
+    // return sum;
 }
 int main(){
     //freopen("input.txt", "rt", stdin);
