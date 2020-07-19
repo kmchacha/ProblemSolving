@@ -3,7 +3,7 @@
 ' 파일명    : pps.cpp
 ' 작성자    : 차경민
 ' 목적      : Problem Solving
-' 날짜      : 2020/07/16
+' 날짜      : 2020/07/19
 ' 문제      : 
 '
 ' 문제 설명 : 
@@ -18,7 +18,7 @@
 #include <iostream>
 using namespace std;
 int main(){
-    //freopen("input.txt", "rt", stdin);
-   
+    freopen("input.txt", "rt", stdin);
+    
     return 0;
 }
