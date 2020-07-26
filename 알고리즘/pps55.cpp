@@ -39,6 +39,8 @@ int main(){
         for(i=0;i<str.size();i++){
             cout << str[i];
         }
+
+        
         cout << endl;
     }
 
