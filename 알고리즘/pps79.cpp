@@ -21,7 +21,7 @@ struct Edge{
         e=a;
         val=b;
     }
-    bool operator<(const Edge &b) const{
+    bool operator < (const Edge &b) const{
         return val>b.val; // 최소 힙 val<b.val(최대 힙)
     }
 };
