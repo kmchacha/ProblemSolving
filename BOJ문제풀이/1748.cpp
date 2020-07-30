@@ -1,14 +1,13 @@
 #include <iostream>
 using namespace std;
 int main(){
-   int n, cnt=1, sum = 0, digit=1;
+   int n, i, digit, k=1, sum=0, ans=0;
    cin >> n;
-   while((sum + 9*digit) < n){
-       sum += (9 * digit) * cnt;
-       cnt++;
-       digit *= 10;
+   for(digit=1;(digit*9)+sum<n;digit*=10,k++){
+       ans += ((digit * 9) * k);
+       sum += (digit * 9);
    }
-   sum = sum + (cnt * (n-digit+1));
-   cout << sum << endl;
+   ans += (k * (n-digit+1));
+   cout << ans << endl;
    return 0;
 }
