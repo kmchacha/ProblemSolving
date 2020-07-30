@@ -4,25 +4,38 @@
 ' 작성자    : 차경민
 ' 목적      : Problem Solving
 ' 날짜      : 2020/07/29
-' 문제      : 돌다리 건너기(Bottom up)
+' 문제      : 최대 부분 증가수열
 '******************************************************************************
 */
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
-int dp[50];
+int dp[1001];
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    //freopen("input.txt", "rt", stdin);
-    int n;
+    freopen("input.txt", "rt", stdin);
+    
+    int n, i, j, a[1001], res=0;
     cin >> n;
-    dp[0] = 1;
-    dp[1] = 1;
-    for(int i=2;i<=n+1;i++){
-        dp[i] = dp[i-1] + dp[i-2];
+    for(i=1;i<=n;i++){
+        cin >> a[i];
     }
-    cout << dp[n+1] << endl;
+
+    dp[1]=1;
+    for(i=2;i<=n;i++){
+        int max=0;
+        for(j=i-1;j>=1;j--){
+            if(a[i]>a[j] && dp[j]>max) {
+                max = dp[j];
+            }
+        }
+        dp[i] = max + 1;
+
+        if(dp[i]>res) res=dp[i];
+    }
+    
+    cout << res << endl;
     return 0;
 }
