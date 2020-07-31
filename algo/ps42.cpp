@@ -12,7 +12,7 @@
 #include <algorithm> // sort(), a.push_back()
 using namespace std;
 int main(){
-    freopen("input.txt", "rt", stdin);
+    //freopen("input.txt", "rt", stdin);
     int n , i , j, target, tmp;
     cin >> n;
     cin >> target;
@@ -27,7 +27,7 @@ int main(){
     // Binary Search
     int lt = 0; // left
     int rt = n-1;   // right
-    int mid = (1+n)/2;
+    int mid = (lt+rt)/2;
     while(1){   // lt<=rt 조건도 가능하다, 자료가 발견되지 않을시 멈춘다
         if(a[mid] == target){
             break;

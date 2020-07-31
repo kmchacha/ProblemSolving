@@ -10,34 +10,37 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-int a[1001], n;
 using namespace std;
+
+int a[1001], n;
 int count(int size) {
     int i, sum=0, cnt=1;
     for(i=1;i<=n;i++){
-        if(sum>=size){
-            sum = 0;
+        if(a[i]+sum > size){
+            sum = a[i];
             cnt++;
+        }
+        else {
+            sum += a[i];
         }
     }
     return cnt;
 }
 int main(){
     freopen("input.txt", "rt", stdin);
-    int n, m, i, lt=1, rt, mid, res;
+    int m, i, lt=1, rt=0, mid, res;
     cin >> n >> m;
-    for(i=0;i<n;i++){
+    for(i=1;i<=n;i++){
         cin >> a[i];
         rt += a[i];
     }
-    
     while(lt<=rt){
         mid = (lt+rt)/2;
-        if(count(mid)>=m){
+        if(count(mid)<=m){
             res = mid;
-            lt = mid + 1;
-        }else{
             rt = mid - 1;
+        }else{
+            lt = mid + 1;
         }
     }
     cout << res << endl;
