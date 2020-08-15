@@ -2,13 +2,14 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+#include <cstring>
 using namespace std;
-int dis[300][300];
+int dis[301][301];
 int dx[]={-2,-1,1,2,2,1,-1,-2};
 int dy[]={1,2,2,1,-1,-2,-2,-1};
 int main(){
 	ios_base::sync_with_stdio(false);
-	//freopen("input.txt", "rt", stdin);
+	freopen("input.txt", "rt", stdin);
     int t;
     cin >> t;
 	for(int c=0;c<t;c++){
@@ -34,7 +35,7 @@ int main(){
                 }
             }
         }
-        std::cout << dis[ex][ey] << '\n';
+        cout << dis[ex][ey] << '\n';
     }
 	return 0;
 }
