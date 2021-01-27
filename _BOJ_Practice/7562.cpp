@@ -9,7 +9,7 @@ int dx[]={-2,-1,1,2,2,1,-1,-2};
 int dy[]={1,2,2,1,-1,-2,-2,-1};
 int main(){
 	ios_base::sync_with_stdio(false);
-	freopen("input.txt", "rt", stdin);
+	//freopen("input.txt", "rt", stdin);
     int t;
     cin >> t;
 	for(int c=0;c<t;c++){

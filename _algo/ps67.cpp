@@ -15,7 +15,7 @@ int map[21][21], ch[21], sum=0, n, ans=2147000000;
 void DFS(int v){
     int i;
     if(v==n){
-        ans = (ans>sum)?sum:ans;
+        ans = min(ans, sum);
     }else {
         for(i=1;i<=n;i++){
             if(map[v][i]>0 && ch[i]==0){
@@ -37,6 +37,7 @@ int main(){
         cin >> a >> b >> w;
         map[a][b] = w;
     }
+    ch[1]=1;
     DFS(1);
     cout << ans << endl;
     return 0;
