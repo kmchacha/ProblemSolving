@@ -1,41 +1,15 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-char map[3000][3000];
+void recur(int ){
 
-void recur(int n, int x, int y){
-    if(n==1){
-        map[x][y]='*';
-    }
-    else {
-        int div=n/3;
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
-                if(i==1 && j==1) continue;
-
-                recur(div, (i*div) + x ,(j*div)+y);
-            }
-        }
-    }
 }
 int main(){
-    int n;
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    int n;  // N은 3의 거듭제곱이다. 즉 어떤 정수 k에 대해 N=3k이며, 이때 1 ≤ k < 8이다.
     cin >> n;
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            map[i][j]=' ';
-        }
-    }
-    recur(n, 0, 0);
-
-    for(int i=0;i<n;i++){
-        for(int j=0;j<n;j++){
-            cout << map[i][j];
-        }
-        cout << '\n';
-    }
+    
     return 0;
 }

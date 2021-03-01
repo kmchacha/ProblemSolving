@@ -1,38 +1,34 @@
-// Longest Increasing Subsequence 11053
-#include <iostream>
-#include <string>
-#include <vector>
+#include <bits/stdc++.h>
 
-int
-main(int argc, const char* argv[])
+using namespace std;
+
+int arr[1001];
+int dp[1001]; // i번째까지 최대 증가하는 부분 수열의 길이
+int main()
 {
-    using namespace std;
-
-    int n;
-
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    //freopen("input.txt", "rt", stdin);
+    int n, ans;
     cin >> n;
-
-    int a[1000];
-    for(int i = 0; i < n ; i ++){
-        cin >> a[i];
+    for(int i=1;i<=n;i++){
+        cin >> arr[i];
     }
-   
-    int dp[1000];
-    int max= 0;
-    for(int i = 0 ; i < n ; i++) {
-        dp[i] = 1;
-        for(int j = i-1; j >= 0; j--) {
-            if(a[i] > a[j] && dp[i] <= dp[j]) {
-                dp[i] = dp[j] + 1;
-                if(max < dp[i]) max = dp[i];
+
+    dp[1] = 1;
+    ans = 1;
+    for(int i=2;i<=n;i++){
+        // i번 보다 작은 영역에서 dp[i]는 가장 크면서 arr[i]보다는 작은 값
+        int tmp = 0;
+        for(int j=1;j<i;j++){
+            if(arr[i] > arr[j] && dp[j] > tmp){
+                tmp = dp[j];
             }
         }
-    }
-    for(int i = 0 ; i< n; i++){
-        cout << dp[i] << endl;
-    }
+        dp[i] = tmp + 1;
 
-    cout << max << endl;
-
+        ans = max(dp[i], ans);
+    }
+    cout << ans;
     return 0;
 }

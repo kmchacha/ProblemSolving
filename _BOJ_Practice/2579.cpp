@@ -2,25 +2,24 @@
 
 using namespace std;
 
-int arr[100001], dp[100001]; 
-// dp[i] : i번째가 포함되어서 만들 수 있는 최대 정수
-
-int main()
-{
+int dp[301][3], arr[301];
+int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     //freopen("input.txt", "rt", stdin);
-    int n, ans;
+    int n;
     cin >> n;
     for(int i=1;i<=n;i++){
         cin >> arr[i];
     }
-    dp[1] = arr[1];
-    ans = arr[1];
+
+    dp[1][1] = arr[1];
     for(int i=2;i<=n;i++){
-        dp[i] = max(arr[i], dp[i-1] + arr[i]);
-        ans = max(ans, dp[i]);
+        dp[i][1] = max(dp[i-2][1], dp[i-2][2]) + arr[i];
+        dp[i][2] = dp[i-1][1] + arr[i];
     }
-    cout << ans;
+    
+    cout << max(dp[n][1], dp[n][2]) << '\n';
+
     return 0;
 }
