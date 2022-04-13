@@ -1,37 +1,21 @@
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int n, ans=-2147000000;
-int _plus[21], _minus[21],  ch[21];
-
-void DFS(int v){
-    if(n+1 == v){
-        int sum=0, hp=100;
-        for(int i=1;i<=n;i++){
-            if(ch[i]==1){
-                sum += _plus[i];
-                hp -= _minus[i];
-            }
-        }
-
-        if(hp>0 && ans < sum) ans = sum;
-        return;
-    }
-    ch[v]=1;
-    DFS(v+1);
-    ch[v]=0;
-    DFS(v+1);
-    
-}
+int N, happy[25], loss[25], dp[105];
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
-    //freopen("input.txt","rt",stdin);
-    cin >> n;
-    for(int i=1;i<=n;i++)   cin >> _minus[i];
-    for(int i=1;i<=n;i++)   cin >> _plus[i];
-    DFS(1);
-    cout << ans;
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    // freopen("input.txt", "rt", stdin);
+    cin >> N;
+    for(int i=0;i<N;i++) cin >> loss[i];
+    for(int i=0;i<N;i++) cin >> happy[i];
+
+    for(int i=0;i<N;i++){
+        
+        for(int j=100;j>=loss[i];j--){
+            dp[j] = max(dp[j], dp[j - loss[i]] + happy[i]);
+        }
+    }
+    cout << dp[99];
     return 0;
 }

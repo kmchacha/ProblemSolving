@@ -1,141 +1,85 @@
-// // 시간 초과
-// #include <iostream>
-// #include <vector>
-// #include <algorithm>
-// #include <queue>
-// using namespace std;
-// int map[10][10], n=9;
+#include <bits/stdc++.h>
 
-// int main(){
-//     ios_base::sync_with_stdio(false);
-//     cin.tie(NULL);
-//     //freopen("input.txt", "rt", stdin);
-//     queue<pair<int, int> > Q;
-//     for(int i=0;i<n;i++){
-//         for(int j=0;j<n;j++){
-//             cin >> map[i][j];
-//             if(map[i][j] == 0) {
-//                 ch[i/3+1][j/3+1][i][j]=1;
-//                 Q.push(make_pair(i,j));
-//             }
-//         }
-//     }
-
-//     while(!Q.empty()){
-//         pair<int, int> tmp = Q.front();
-//         Q.pop();
-//         int cx = tmp.second;
-//         int cy = tmp.first;
-
-//         // 가로 계산
-//         int tmp2, cnt=0;
-//         for(int k=1;k<=9;k++){
-//             int flag=0;
-//             for(int i=0;i<n;i++){
-//                 if(map[cy][i]==k) flag=1;
-//             }
-//             if(flag==0) {
-//                 cnt++;
-//                 tmp2 = k;
-//             }
-//         }
-//         if(cnt==1) {
-//             map[cy][cx]=tmp2;
-//             continue;
-//         }
-//         // 세로 계산
-//         cnt=0;
-//         for(int k=1;k<=9;k++){
-//             int flag=0;
-//             for(int i=0;i<n;i++){
-//                 if(map[i][cx]==k) flag=1;
-//             }
-//             if(flag==0) {
-//                 cnt++;
-//                 tmp2 = k;
-//             }
-//         }
-//         if(cnt==1) {
-//             map[cy][cx]=tmp2;
-//             continue;
-//         }
-//         // 3 x 3 계산
-//         cnt=0;
-//         for(int k=1;k<=n;k++){
-//             int flag=0;
-//             for(int i=cy/3*3;i<cy/3*3+3;i++){
-//                 for(int j=cx/3*3;j<cx/3*3+3;j++){
-//                     if(map[i][j]==k) flag=1;
-//                 }
-//             }
-//             if(flag==0){
-//                 cnt++;
-//                 tmp2 = k;
-//             }
-//         }
-//         if(cnt==1) {
-//             map[cy][cx]=tmp2;
-//             continue;
-//         }
-
-//         Q.push(make_pair(cx,cy));
-        
-//     }   
-    
-//     for(int i=0;i<n;i++){
-//         for(int j=0;j<n;j++){
-//             cout << map[i][j] << " ";
-//         }
-//         cout << '\n';
-//     }
-//     return 0;
-// }
-
-
-
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <queue>
 using namespace std;
-int map[11][11], n=9, ch[11];
 
-// 가로 검사
-bool check1(int r, int num){
-    for(int i=1;i<=n; i++){
-        if(map[r][i] == num) return true;
-    }
-    return false;
-}
-// 세로 검사
-bool check2(int c, int num){
-    for(int i=1;i<=n;i++){
-        if(map[i][c]==num) return true;
-    }
-    return false;
-}
-// 3x3 검사
-bool check3(int r, int c, int num){
-    //int r = (r % 3) + (r-1 / 3)*3;
-    //int c = (c % 3) + (c-1 / 3)*3;
-    for(int rr=r;rr<=rr+2;rr++){
+int sudoku[10][10];
 
+bool check_row[10][10]; // 행 검사 : x행에 숫자 y가 있으면 true
+bool check_col[10][10]; // 열 검사 : x열에 숫자 y가 있으면 true
+bool check_square[10][10]; // 작은 정사각형 검사 : x번째 작은 정사각형에 숫자 y가 있으면 true
+
+// row행 col열이 속하는 작은 정사각형 구하기
+int get_square(int row, int col){
+    return (row/3)*3 + (col/3);
+}
+
+// sudoku 출력
+void print(){
+    for(int i=0; i<9; i++){
+        for(int j=0; j<9; j++){
+            cout << sudoku[i][j] << ' ';
+        }
+        cout << '\n';
     }
 }
-int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    freopen("input.txt", "rt", stdin);
-    queue<pair<int, int> > Q;
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=n;j++){
-            cin >> map[i][j];
-            if(map[i][j] == 0) {
-                Q.push(make_pair(i,j));
+
+// num번째 스도쿠 구하기
+bool solve(int num){
+    // 마지막 칸인 경우 -> 출력 후 종료
+    if(num == 81) {
+        print();
+        return true;
+    }
+    
+    // 행, 열 구하기
+    int x = num/9; int y = num%9;
+    
+    if(sudoku[x][y] != 0){
+        // 수가 있으면 -> 다음 수로 넘어가기
+        return solve(num+1);
+    } else {
+        // 수가 없으면 -> 1~9 검사해서 수 채우기
+        for(int i=1; i<=9; i++){
+            if(!check_row[x][i] && !check_col[y][i] && !check_square[get_square(x, y)][i]){
+                // 스도쿠 처리
+                check_row[x][i] = true;
+                check_col[y][i] = true;
+                check_square[get_square(x, y)][i] = true;
+                sudoku[x][y] = i;
+                
+                if(solve(num+1)){
+                    return true;
+                }
+                
+                // 다시 돌려놓기 (백트래킹)
+                check_row[x][i] = false;
+                check_col[y][i] = false;
+                check_square[get_square(x, y)][i] = false;
+                sudoku[x][y] = 0;
             }
         }
     }
-
     
+    return false;
+}
+
+int main(void){
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    // freopen("input.txt", "rt", stdin);
+    for(int i=0; i<9; i++){
+        for(int j=0; j<9; j++){
+            cin >> sudoku[i][j];
+            
+            // 빈칸이 아닌 경우 처리
+            if(sudoku[i][j] != 0){
+                check_row[i][sudoku[i][j]] = true;
+                check_col[j][sudoku[i][j]] = true;
+                check_square[get_square(i, j)][sudoku[i][j]] = true;
+            }
+        }
+    }
+    
+    // 0번 칸부터 채우기 시작
+    solve(0);
     return 0;
 }

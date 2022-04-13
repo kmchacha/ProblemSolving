@@ -1,26 +1,20 @@
-#include <vector>
-#include <algorithm>
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
+int arr[15], answer;
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
-    //freopen("input.txt", "rt", stdin);
-    int n, k, ans=0;
-    cin >> n >> k;
-    vector<int> a(n+1, 0);
-    for(int i=1;i<=n;i++)   { cin >> a[i]; }
-    for(int i=n;i>0;i--){
-        if(k<a[i]) continue;
-        
-        while(1){
-            if(k-a[i] < 0) break;
-            k -= a[i];
-            ans++;
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    // freopen("input.txt", "rt", stdin);
+    int N, K;
+    cin >> N >> K;
+    for(int i=0;i<N;i++) cin >> arr[i];
+    for(int i=N-1;i>=0;i--){
+        if(K / arr[i] != 0) {
+            answer+= (K / arr[i]);
+            K -= (K / arr[i]) * arr[i];
         }
     }
-    cout << ans << '\n';
+    cout << answer;
     return 0;
 }

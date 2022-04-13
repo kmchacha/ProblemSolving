@@ -1,37 +1,28 @@
-// 일곱 난쟁이 2309
-#include <iostream>
+#include <bits/stdc++.h>
 
-int
-main(int argc, const char* argv[])
-{   
-    //freopen("input.txt", "rt", stdin);
-    using namespace std;
-    int i,j, a[10], temp, sum=0, n=9;
-    for(i=0;i<n;i++){
-        cin >> a[i];
-        sum += a[i];
+using namespace std;
+
+int arr[10], sum;
+int main(){
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    freopen("input.txt", "rt", stdin);
+    for(int i=0;i<9;i++) {
+        cin >> arr[i];
+        sum += arr[i];
     }
-    
-    // bubble sort
-    for(i=0; i<n-1;i++){
-        for(j=0;j<n-i-1;j++){
-            if(a[j]>a[j+1]) {
-                temp = a[j];
-                a[j] = a[j+1];
-                a[j+1] = temp;
+    for(int i=0;i<9;i++){
+        int flag = 0;
+        for(int j=i+1;j<9;j++){
+            if(i!=j && sum - arr[i] - arr[j] == 100) {
+                arr[i] = arr[j] = 101;
+                cout << i << " " << j << endl;
+                flag = 1;
+                break;
             }
         }
+        // if(flag == 1) break;
     }
-
-    for(i=0;i<n;i++){
-        for(j=i+1;j<n;j++){
-            if(sum - a[i] - a[j] == 100){
-                for(int k=0;k<n;k++){
-                    if(i==k || j==k) continue;
-                    cout << a[k] << '\n';
-                }
-                return 0;
-            }
-        }
-    }
+    sort(arr, arr + 9);
+    for(int i=0;i<7;i++) cout << arr[i] << '\n';
+    return 0;
 }
