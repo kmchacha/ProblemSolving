@@ -1,31 +1,37 @@
-#include <bits/stdc++.h>
+// 일곱 난쟁이 2309
+#include <iostream>
 
-using namespace std;
-
-int arr[10], ch[10];
-void dfs(int L, int sum){
-    if(L==7){
-        if(sum == 100) {
-            for(int i=0;i<9;i++){
-                if(ch[i]==1) cout << arr[i] << '\n';
-            }
-            exit(0);
-        }
-    }else {
-        for(int i=0;i<9;i++){
-            if(ch[i]==0){
-                ch[i] = 1;
-                dfs(L + 1, sum + arr[i]);
-                ch[i] = 0;
+int
+main(int argc, const char* argv[])
+{   
+    //freopen("input.txt", "rt", stdin);
+    using namespace std;
+    int i,j, a[10], temp, sum=0, n=9;
+    for(i=0;i<n;i++){
+        cin >> a[i];
+        sum += a[i];
+    }
+    
+    // bubble sort
+    for(i=0; i<n-1;i++){
+        for(j=0;j<n-i-1;j++){
+            if(a[j]>a[j+1]) {
+                temp = a[j];
+                a[j] = a[j+1];
+                a[j+1] = temp;
             }
         }
     }
-}
-int main(){
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    // freopen("input.txt", "rt", stdin);
-    for(int i=0;i<9;i++)    cin >> arr[i];
-    sort(arr, arr + 9);
-    dfs(0, 0);
-    return 0;
+
+    for(i=0;i<n;i++){
+        for(j=i+1;j<n;j++){
+            if(sum - a[i] - a[j] == 100){
+                for(int k=0;k<n;k++){
+                    if(i==k || j==k) continue;
+                    cout << a[k] << '\n';
+                }
+                return 0;
+            }
+        }
+    }
 }

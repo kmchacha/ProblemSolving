@@ -2,25 +2,24 @@
 
 using namespace std;
 
-int N, r, c, answer;
-void solve(int y1, int x1, int size){
-    if(y1 == r && x1 == c) {
-        cout << answer;
-        return;
-    } 
-    
-    if(r < y1 + size && r >= y1  && c < x1 + size && c >= x1) {
-        solve(y1, x1, size/2);
-        solve(y1+size/2, x1, size/2);
-        solve(y1,x1+size/2,size/2);
-        solve(y1+size/2,x1+size/2,size/2);
-    }else answer += size*size;
-    
+// 2^n x 2^n 배열에서 (r,c)를 방문하는 순서를 반환하는 함수
+int func(int n, int r, int c){
+    if(n==0) return 0;
+    else{
+        int half = 1 << (n-1);
+        if(r < half &&  c < half) return func(n-1, r, c);
+        if(r < half && c >= half) return half*half + func(n-1, r, c-half);
+        if(r >= half && c < half) return 2*half*half + func(n-1,r-half,c);
+        return 3*half*half + func(n-1, r-half, c-half);
+    }
 }
+
 int main(){
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    // freopen("input.txt", "rt", stdin);
-    cin >> N >> c >> r;
-    solve(0, 0, (1<<N));
-    return 0;   
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    int n, r, c;
+    cin >> n;
+    cin >> r >> c;
+    cout << func(n, r, c);
+    return 0;
 }

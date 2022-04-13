@@ -2,33 +2,21 @@
 
 using namespace std;
 
-struct job {
-    int t, p;
-    job(int a, int b){
-        t = a;
-        p = b;
-    }
-};
+int T[20], P[20];
+int dp[20]; // n 일까지 얻는 이익
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    freopen("input.txt", "rt", stdin);
+    int n;
+    cin >> n;
+    for(int i=1;i<=n;i++)   cin >> T[i] >> P[i];
 
-int N, ans;
-vector<job> v;
-void solve(int L, int sum){
-    ans = max(ans, sum);
-    if(L >= N) return;
-    
-    if(L + v[L].t <= N) solve(L + v[L].t, sum + v[L].p);
-    if(L + 1 <= N) solve(L + 1, sum);
-}
-int main(){
-    ios_base::sync_with_stdio(0); cin.tie(0);
-    // freopen("input.txt", "rt", stdin);
-    cin >> N;
-    for(int i=0;i<N;i++){
-        int T, P;
-        cin >> T >> P;
-        v.push_back(job(T, P));
+    // 백준이가 얻을 수 있는 최대 이익을 출력한다.
+    for(int i=1;i<=n;i++){
+        dp[i] = max(dp[i-1], P[i]);
+        cout << dp[i]<< " ";
     }
-    solve(0, 0);
-    cout << ans;
     return 0;
 }
